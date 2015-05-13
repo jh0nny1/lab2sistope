@@ -3,10 +3,18 @@
 #include <pthread.h>
 
 void *f(void *args){
-	//int num = args[0];
 	int *num =(int *)args;
-	printf("numero = %i\n",*num);
+	//printf("numero = %i\n",*num);
+	struct_thread *stct = (struct_thread *)malloc(sizeof(struct_thread)*1);
+	
+	stct.id_hebra=i;
+	stct.pt_array = llenar_letras(i,16);
+	stct_array[i]=stct;
+	printf("fin hebra\n");
 }
+
+
+
 //A=0,B=1,C=2,D=3 ....
 int *llenar_letras(int letra_inicial, int largo){
 	int *array_letras = (int *)malloc(sizeof(int)*largo);
@@ -34,7 +42,6 @@ int *llenar_letras(int letra_inicial, int largo){
 				}
 			}
 			else{
-	printf("awd\n");
 				letra_a_poner++;
 				array_letras[i]=letra_a_poner;
 			}
@@ -44,22 +51,27 @@ int *llenar_letras(int letra_inicial, int largo){
 	return array_letras;
 }
 
+typedef struct structurita {
+	int id_hebra;
+	int *pt_array;
+} struct_thread;
+
 
 int main(){
+	
 	int cant_mensajes = 36;
-	int i,n=18;
+	int i,n=18;//n=cantidad de computadores en la red
 	pthread_t *pt_array = (pthread_t*)malloc(sizeof(pthread_t)*n);
-	/*for(i=1;i<n+1;i++){
-//		num[i]=i;
+	struct_thread *stct_array = (struct_thread*)malloc(sizeof(struct_thread)*18);
+	for(i=1;i<n+1;i++){
 		int creado;
 		creado = pthread_create(&pt_array[i],NULL,*f,&i);
 		pthread_join(pt_array[i],NULL);
-	}*/
+
+	}
+
 	int *array = (int *)malloc(sizeof(int)*cant_mensajes);
 	array = llenar_letras(0,cant_mensajes);
-	int j;
-	for(j=0;j<cant_mensajes;j++){
-		printf("array[%i]=%i\n",j,array[j]);
-	}
-	printf("TERMINO\n");
 }
+
+
